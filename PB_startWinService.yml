@@ -1,4 +1,5 @@
 - name: Start a windows service Playbook
+  hosts: all
   vars:
     service_name: 'GlassFish4'
     service_state: 'started'
