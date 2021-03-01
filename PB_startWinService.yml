@@ -1,9 +1,18 @@
-- name: Start a windows service
-  ansible.windows.win_service:
+- name: Start a windows service Playbook
   vars:
     service_name: 'GlassFish4'
     service_state: 'started'
+    glassfish_url: http://localhost:4848/common/index.jsf
   
   tasks:
-    name: "{{ service_name }}"
-    state: "{{ service_state }}"
+    - name: Start a windows service
+      ansible.windows.win_service:
+        name: "{{ service_name }}"
+        state: "{{ service_state }}"
+
+    - name: Accesing GlassFish Web Console for validation
+      uri:
+        url: "{{ glassfish_url }}"
+        method: GET
+        return_content: yes
+        status_code: 200
