@@ -1,0 +1,11 @@
+[local]
+localhost ansible_connection=local
+
+[windows]
+192.168.1.113 
+
+[windows:vars]
+ansible_user=Administrator
+ansible_password=r3dh4t1!
+ansible_connection=winrm
+ansible_winrm_server_cert_validation=ignore
