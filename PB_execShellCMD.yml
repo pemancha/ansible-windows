@@ -1,0 +1,12 @@
+- name: Execute a shell command
+  hosts: all
+  vars:
+    remote_cmd: 'java -version'
+
+  tasks:
+    - name: Execute a shell command
+      win_shell: '{{ remote_cmd }}'
+      register: output
+   
+    - debug:
+        var: output
