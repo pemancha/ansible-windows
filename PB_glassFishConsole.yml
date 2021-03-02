@@ -1,0 +1,12 @@
+- name: Access GlassFish Web Console for validation
+  hosts: all
+  vars:
+    glassfish_url: http://localhost:4848/common/index.jsf
+  
+  tasks:  
+    - name: Accesing GlassFish Web Console for validation
+      win_uri:
+        url: "{{ glassfish_url }}"
+        method: GET
+        return_content: yes
+        status_code: 200
