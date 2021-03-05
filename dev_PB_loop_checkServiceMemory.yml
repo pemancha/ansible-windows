@@ -1,0 +1,13 @@
+- name: Check windows service memory Playbook
+  hosts: all
+  vars:
+    service_name: 'GlassFish4'
+    service_state: 'started'
+  
+  tasks:
+    - name: Check windows service memory
+      win_shell: Get-WmiObject Win32_Service  -FIlter "name='{{ service_name  }}'" | ForEach-Object{Get-Process -PID $_.ProcessID} | select -expandproperty WS
+      register: output
+
+    - debug:
+       var: output
