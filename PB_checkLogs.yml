@@ -1,0 +1,19 @@
+- name: Check windows log file for keyword
+  hosts: all
+  vars:
+    log_path: 'C:\glassfish4\glassfish\domains\domain1\logs\server.log'
+    log_keyword: 'JMXStartupService has started'
+    log_tail_line: 5
+    log_retry: 50
+    long_delay: 15
+
+  tasks:
+    - name: Check windows log file for keyword
+      win_shell: get-content '{{ log_path  }}' -Tail '{{ log_tail_line }}'
+      register: output
+      until: output.stdout.find("{{ log_keyword }}") != -1
+      retries: '{{ log_retry  }}'
+      delay: '{{ log_delay  }}'
+
+    - debug:
+        var: output
