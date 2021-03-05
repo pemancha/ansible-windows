@@ -3,14 +3,16 @@
   vars:
     process_name: 'java'
     target_mem: '750000000'
+    mem_retry: 90
+    mem_delay: 10
 
   tasks:
     - name: Check windows service memory
       win_shell: get-process -name '{{ process_name }}' | Sort-Object -Property ws -Descending |  Select-Object -first 1 -expandproperty WS
       register: output
       until: output.stdout | int > {{ target_mem }}
-      retries: 90
-      delay: 10
+      retries: '{{ mem_retry  }}'
+      delay: '{{ mem_delay  }}'
 
     - debug:
         var: output
