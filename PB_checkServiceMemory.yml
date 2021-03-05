@@ -1,13 +1,16 @@
 - name: Check windows service memory Playbook
   hosts: all
   vars:
-    service_name: 'GlassFish4'
-    service_state: 'started'
-  
+    process_name: 'java'
+    target_mem: '750000000'
+
   tasks:
     - name: Check windows service memory
-      win_shell: Get-WmiObject Win32_Service  -FIlter "name='{{ service_name  }}'" | ForEach-Object{Get-Process -PID $_.ProcessID} | select -expandproperty WS
+      win_shell: get-process -name '{{ process_name }}' | Sort-Object -Property ws -Descending |  Select-Object -first 1 -expandproperty WS
       register: output
+      until: output.stdout | int > {{ target_mem }}
+      retries: 90
+      delay: 10
 
     - debug:
-       var: output
+        var: output
