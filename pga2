@@ -1,0 +1,10 @@
+---
+- name: CHK A
+  hosts: all
+ 
+  tasks: 
+    - name: fetch file from windows
+      fetch: C:\glassfish4\glassfish\domains\domain1\logs\server.log flat=yes 
+      
+    - debug: 
+      var: copyme_01
